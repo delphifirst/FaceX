@@ -17,4 +17,5 @@ Known Issue:
 
 
 [1] Cao X, Wei Y, Wen F, et al. Face alignment by explicit shape regression[J]. International Journal of Computer Vision, 2014, 107(2): 177-190.
+
 [2] http://ibug.doc.ic.ac.uk/resources/facial-point-annotations/
