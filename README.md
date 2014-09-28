@@ -19,7 +19,7 @@ Currently, the training code is not available. I will make it available as soon 
 Known Issue
 ====
 
-1. FaceX::OpenModel is very slow in Visual C++ 2013 Express for Desktop (takes more than 40 seconds) because the persistence module of OpenCV for Windows is slow. Maybe I will consider using binary file to store the model. There is no such problem in GCC under Linux.
+1. The program is very slow if you run it in Visual C++ debugger. Even if you use Release Mode. Therefore, run it directly outside (remember to put the three files in the current working directory). It seems Visual C++ debugger will slow down some program greatly.
 
 Reference
 ====
