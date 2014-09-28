@@ -71,12 +71,12 @@ vector<cv::Point2d> MapShape(cv::Rect original_face_rect,
 	for (const cv::Point2d &landmark: original_landmarks)
 	{
 		result.push_back(landmark);
-		result.back() -= static_cast<cv::Point2d>(original_face_rect.tl());
+		result.back() -= cv::Point2d(original_face_rect.x, original_face_rect.y);
 		result.back().x *= 
 			static_cast<double>(new_face_rect.width) / original_face_rect.width;
 		result.back().y *= 
 			static_cast<double>(new_face_rect.height) / original_face_rect.height;
-		result.back() += static_cast<cv::Point2d>(new_face_rect.tl());
+		result.back() += cv::Point2d(new_face_rect.x, new_face_rect.y);
 	}
 	return result;
 }
