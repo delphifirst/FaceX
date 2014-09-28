@@ -21,6 +21,8 @@ Known Issue
 
 1. FaceX::OpenModel is very slow in Visual C++ 2013 Express for Desktop (takes more than 40 seconds) because the persistence module of OpenCV for Windows is slow. Maybe I will consider using binary file to store the model. There is no such problem in GCC under Linux.
 
+Reference
+====
 
 [1] Cao X, Wei Y, Wen F, et al. Face alignment by explicit shape regression[J]. International Journal of Computer Vision, 2014, 107(2): 177-190.
 
