@@ -25,7 +25,23 @@ public:
 	//
 	// Return the landmarks. The number and positions of landmarks depends on
 	// the model.
-	std::vector<cv::Point2d> Alignment(cv::Mat image, cv::Rect face_rect);
+	std::vector<cv::Point2d> Alignment(cv::Mat image, cv::Rect face_rect) const;
+
+	// Do face alignment incrementally. Useful for videos.
+	//
+	// image: The image which contains face. Must be 8 bits gray image.
+	// initial_landmarks: Initial guess of where each landmark is.
+	//
+	// Return the landmarks. The number and positions of landmarks depends on
+	// the model.
+	std::vector<cv::Point2d> Alignment(cv::Mat image,
+		std::vector<cv::Point2d> initial_landmarks) const;
+
+	// Return how many landmarks the model provides for a face.
+	int landmarks_count() const
+	{
+		return mean_shape_.size();
+	}
 
 private:
 	std::vector<cv::Point2d> mean_shape_;
