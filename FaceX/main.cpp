@@ -20,7 +20,6 @@ void AlignImage(const FaceX & face_x)
 	cv::Mat gray_image;
 	cv::cvtColor(image, gray_image, CV_BGR2GRAY);
 	cv::CascadeClassifier cc(kAlt2);
-	cv::equalizeHist(gray_image, gray_image);
 	vector<cv::Rect> faces;
 	cc.detectMultiScale(gray_image, faces);
 
@@ -51,7 +50,6 @@ void Tracking(const FaceX & face_x)
 	{
 		vc >> frame;
 		cv::cvtColor(frame, img, cv::COLOR_BGR2GRAY);
-		cv::equalizeHist(img, img);
 		cv::imshow("test", img);
 
 		cv::vector<cv::Point2d> original_landmarks = landmarks;
