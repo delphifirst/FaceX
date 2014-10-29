@@ -1,0 +1,60 @@
+# This file contains all the parameters for training.
+#
+# The training tool parse this file in a rather simple way, so DO NOT use space in
+# paths or filenames, and DO NOT mix comments with parameters.
+
+
+# The root path of all training data. There should be a label file named "labels.txt" 
+# which contains landmark labels for the training data. 
+training_data_root: train
+
+# How many landmarks for each face
+landmark_count: 5
+
+# The index of left eye center in landmarks. If there is no landmark for eye center 
+# in the landmark configuration, choose one near eye center (e.g. eye corner)
+left_eye_index: 0
+
+# Same as above, for right eye center
+right_eye_index: 1
+
+# The output model file path and name (must end with ".xml.gz")
+output_model_pathname: model.xml.gz
+
+
+# Below are parameters of the model, you can refer to the paper I mentioned in 
+# README.md to get a better understanding. If you don't quite understand, you
+# can use the default value as below.
+
+# The number of top-level stages
+T: 10
+
+# The number of bottom-level stages for each top-level stage
+K: 500
+
+# The number of random features generated for each top-level stage
+P: 400
+
+# The level of randomness for each feature. Must in range [0.01, 1]. Lower value 
+# means features will be generated near the current guessed landmark positions.
+Kappa: 0.3
+
+# The F parameter of fern
+F: 5
+
+# Regularization coefficient
+Beta: 1000
+
+# The number of inintialization in testing. Lower value will speed up alignment,
+# but may hurt accuracy
+TestInitShapeCount: 5
+
+# Data argumentation factor. Lower value will speed up training, but may hurt
+# accuracy
+ArgumentDataFactor: 20
+
+# The number of vector basis for model compression
+Base: 512
+
+# The number of non-zero value in sparse coding for model compression
+Q: 5
