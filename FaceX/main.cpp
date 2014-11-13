@@ -44,6 +44,11 @@ void AlignImage(const FaceX & face_x)
 	cv::Mat gray_image;
 	cv::cvtColor(image, gray_image, CV_BGR2GRAY);
 	cv::CascadeClassifier cc(kAlt2);
+	if(cc.empty())
+	{
+		cout << "Cannot open model file " << kAlt2 << " for OpenCV face detector!" << endl;
+		return;
+	}
 	vector<cv::Rect> faces;
 	cc.detectMultiScale(gray_image, faces);
 

@@ -111,10 +111,10 @@ TrainingParameters ReadParameters(const string &filename)
 
 vector<DataPoint> GetTrainingData(const TrainingParameters &tp)
 {
-	const string label_pathname = tp.training_data_root + "\\labels.txt";
+	const string label_pathname = tp.training_data_root + "/labels.txt";
 	ifstream fin(label_pathname);
 	if (!fin)
-		throw runtime_error("Cannot open label file " + label_pathname);
+		throw runtime_error("Cannot open label file " + label_pathname + " (Pay attention to path separator!)");
 
 	vector<DataPoint> result;
 	string current_image_pathname;
@@ -122,10 +122,10 @@ vector<DataPoint> GetTrainingData(const TrainingParameters &tp)
 	while (fin >> current_image_pathname)
 	{
 		DataPoint current_data_point;
-		current_data_point.image = cv::imread(tp.training_data_root + "\\" +
+		current_data_point.image = cv::imread(tp.training_data_root + "/" +
 			current_image_pathname, CV_LOAD_IMAGE_GRAYSCALE);
 		if (current_data_point.image.data == nullptr)
-			throw runtime_error("Cannot open image file " + current_image_pathname);
+			throw runtime_error("Cannot open image file " + current_image_pathname + " (Pay attention to path separator!)");
 		int left, right, top, bottom;
 		fin >> left >> right >> top >> bottom;
 		current_data_point.face_rect =
@@ -299,7 +299,7 @@ int main(int argc, char *argv[])
 		vector<DataPoint> training_data = GetTrainingData(tp);
 		TrainModel(training_data, tp);
 	}
-	catch (exception e)
+	catch (const exception &e)
 	{
 		cout << e.what() << endl;
 		return -1;
