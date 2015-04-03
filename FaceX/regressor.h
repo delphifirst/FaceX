@@ -32,23 +32,23 @@ THE SOFTWARE.
 #include<opencv2/core/core.hpp>
 
 #include "fern.h"
+#include "utils.h"
 
 class Regressor
 {
 public:
-	std::vector<cv::Point2d> Apply(const std::vector<cv::Point2d> &mean_shape, 
+	std::vector<cv::Point2d> Apply(const Transform &t, 
 		cv::Mat image, const std::vector<cv::Point2d> &init_shape) const;
 
 	void read(const cv::FileNode &fn);
 
 private:
 
-	std::vector<std::pair<int, cv::Point2d>> pixels;
-	std::vector<Fern> ferns;
-	cv::Mat base;
+	std::vector<std::pair<int, cv::Point2d>> pixels_;
+	std::vector<Fern> ferns_;
+	cv::Mat base_;
 };
 
-void read(const cv::FileNode& node, Regressor& r, 
-	const Regressor& default_value = Regressor());
+void read(const cv::FileNode& node, Regressor& r, const Regressor&);
 
 #endif

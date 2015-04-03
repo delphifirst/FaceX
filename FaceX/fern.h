@@ -42,7 +42,6 @@ struct Fern
 	std::vector<std::vector<std::pair<int, double>>> outputs_mini;
 };
 
-void read(const cv::FileNode& node, Fern& f,
-	const Fern& default_value = Fern());
+void read(const cv::FileNode& node, Fern& f, const Fern&);
 
 #endif

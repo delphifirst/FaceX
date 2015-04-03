@@ -28,7 +28,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-void Transform::Apply(vector<cv::Point2d> *x, bool need_translation)
+void Transform::Apply(vector<cv::Point2d> *x, bool need_translation) const
 {
 	for (cv::Point2d &p : *x)
 	{

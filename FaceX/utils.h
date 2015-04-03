@@ -34,7 +34,7 @@ struct Transform
 	cv::Matx22d scale_rotation;
 	cv::Matx21d translation;
 
-	void Apply(std::vector<cv::Point2d> *x, bool need_translation = true);
+	void Apply(std::vector<cv::Point2d> *x, bool need_translation = true) const;
 };
 
 template<typename T>
@@ -43,6 +43,7 @@ inline T Sqr(T a)
 	return a * a;
 }
 
+// Find the transform from y to x
 Transform Procrustes(const std::vector<cv::Point2d> &x,
 	const std::vector<cv::Point2d> &y);
 

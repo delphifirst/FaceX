@@ -113,26 +113,28 @@ void Tracking(const FaceX & face_x)
 
 int main()
 {
-	FaceX face_x;
-	if (!face_x.OpenModel(kModelFileName))
+	try
 	{
-		cout << "Cannot open model file \"" << kModelFileName << "\"!" << endl;
-		return -1;
-	}
+		FaceX face_x(kModelFileName);
 
-	cout << "Choice: " << endl;
-	cout << "1. Align " << kTestImage << " in the current working directory." << endl;
-	cout << "2. Align video from web camera." << endl;
-	cout << "Please select one [1/2]: ";
-	int choice;
-	cin >> choice;
-	switch (choice)
+		cout << "Choice: " << endl;
+		cout << "1. Align " << kTestImage << " in the current working directory." << endl;
+		cout << "2. Align video from web camera." << endl;
+		cout << "Please select one [1/2]: ";
+		int choice;
+		cin >> choice;
+		switch (choice)
+		{
+		case 1:
+			AlignImage(face_x);
+			break;
+		case 2:
+			Tracking(face_x);
+			break;
+		}
+	}
+	catch (const runtime_error& e)
 	{
-	case 1:
-		AlignImage(face_x);
-		break;
-	case 2:
-		Tracking(face_x);
-		break;
+		cerr << e.what() << endl;
 	}
 }

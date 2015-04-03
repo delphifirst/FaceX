@@ -25,43 +25,40 @@ THE SOFTWARE.
 #include "regressor.h"
 
 #include <utility>
-#include <iostream>
 #include <algorithm>
-
-#include "utils.h"
+#include <stdexcept>
 
 
 using namespace std;
 
 
-vector<cv::Point2d> Regressor::Apply(const vector<cv::Point2d> &mean_shape, 
+vector<cv::Point2d> Regressor::Apply(const Transform &t, 
 	cv::Mat image, const std::vector<cv::Point2d> &init_shape) const
 {
-	cv::Mat pixels_val(1, pixels.size(), CV_64FC1);
-	Transform t = Procrustes(init_shape, mean_shape);
-	vector<cv::Point2d> offsets(pixels.size());
-	for (int j = 0; j < pixels.size(); ++j)
-		offsets[j] = pixels[j].second;
+	cv::Mat pixels_val(1, pixels_.size(), CV_64FC1);
+	vector<cv::Point2d> offsets(pixels_.size());
+	for (int j = 0; j < pixels_.size(); ++j)
+		offsets[j] = pixels_[j].second;
 	t.Apply(&offsets, false);
 
 	double *p = pixels_val.ptr<double>(0);
-	for (int j = 0; j < pixels.size(); ++j)
+	for (int j = 0; j < pixels_.size(); ++j)
 	{
-		cv::Point pixel_pos = init_shape[pixels[j].first] + offsets[j];
+		cv::Point pixel_pos = init_shape[pixels_[j].first] + offsets[j];
 		if (pixel_pos.inside(cv::Rect(0, 0, image.cols, image.rows)))
 			p[j] = image.at<uchar>(pixel_pos);
 		else
 			p[j] = 0;
 	}
 
-	vector<double> coeffs(base.cols);
-	for (int i = 0; i < ferns.size(); ++i)
-		ferns[i].ApplyMini(pixels_val, coeffs);
+	vector<double> coeffs(base_.cols);
+	for (int i = 0; i < ferns_.size(); ++i)
+		ferns_[i].ApplyMini(pixels_val, coeffs);
 
-	cv::Mat result_mat = cv::Mat::zeros(mean_shape.size() * 2, 1, CV_64FC1);
-	for (int i = 0; i < base.cols; ++i)
-		result_mat += coeffs[i] * base.col(i);
-	vector<cv::Point2d> result(mean_shape.size());
+	cv::Mat result_mat = cv::Mat::zeros(init_shape.size() * 2, 1, CV_64FC1);
+	for (int i = 0; i < base_.cols; ++i)
+		result_mat += coeffs[i] * base_.col(i);
+	vector<cv::Point2d> result(init_shape.size());
 	for (int i = 0; i < result.size(); ++i)
 	{
 		result[i].x = result_mat.at<double>(i * 2);
@@ -72,33 +69,30 @@ vector<cv::Point2d> Regressor::Apply(const vector<cv::Point2d> &mean_shape,
 
 void Regressor::read(const cv::FileNode &fn)
 {
-	pixels.clear();
-	ferns.clear();
+	pixels_.clear();
+	ferns_.clear();
 	cv::FileNode pixels_node = fn["pixels"];
 	for (auto it = pixels_node.begin(); it != pixels_node.end(); ++it)
 	{
 		pair<int, cv::Point2d> pixel;
 		(*it)["first"] >> pixel.first;
 		(*it)["second"] >> pixel.second;
-		pixels.push_back(pixel);
+		pixels_.push_back(pixel);
 	}
 	cv::FileNode ferns_node = fn["ferns"];
 	for (auto it = ferns_node.begin(); it != ferns_node.end(); ++it)
 	{
 		Fern f;
 		*it >> f;
-		ferns.push_back(f);
+		ferns_.push_back(f);
 	}
-	fn["base"] >> base;
+	fn["base"] >> base_;
 }
 
-void read(const cv::FileNode& node, Regressor& r, const Regressor& default_value)
+void read(const cv::FileNode& node, Regressor& r, const Regressor&)
 {
 	if (node.empty())
-	{
-		r = default_value;
-		cout << "One default Regressor. Model file is corrupt!" << endl;
-	}
+		throw runtime_error("Model file is corrupt!");
 	else
 		r.read(node);
 }

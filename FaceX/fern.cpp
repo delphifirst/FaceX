@@ -74,13 +74,10 @@ void Fern::read(const cv::FileNode &fn)
 	}
 }
 
-void read(const cv::FileNode& node, Fern &f, const Fern& default_value)
+void read(const cv::FileNode& node, Fern &f, const Fern&)
 {
 	if (node.empty())
-	{
-		f = default_value;
-		cout << "! One default Regressor." << endl;
-	}
+		throw runtime_error("Model file is corrupt!");
 	else
 		f.read(node);
 }

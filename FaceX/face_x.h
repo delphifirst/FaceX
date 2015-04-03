@@ -36,12 +36,12 @@ THE SOFTWARE.
 class FaceX
 {
 public:
-	// Load model from file.
+	// Construct the object and load model from file.
 	//
 	// filename: The file name of the model file.
 	//
-	// Return true if the model is successfully loaded, false otherwise.
-	bool OpenModel(const std::string &filename);
+	// Throw runtime_error if the model file cannot be opened.
+	FaceX(const std::string &filename);
 
 	// Do face alignment.
 	//
@@ -72,7 +72,6 @@ private:
 	std::vector<cv::Point2d> mean_shape_;
 	std::vector<std::vector<cv::Point2d>> test_init_shapes_;
 	std::vector<Regressor> stage_regressors_;
-	bool is_loaded_ = false;
 };
 
 #endif

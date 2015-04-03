@@ -25,17 +25,18 @@ THE SOFTWARE.
 #include "face_x.h"
 
 #include <algorithm>
+#include <stdexcept>
 
 #include "utils.h"
 
 using namespace std;
 
-bool FaceX::OpenModel(const string & filename)
+FaceX::FaceX(const string & filename)
 {
 	cv::FileStorage model_file;
 	model_file.open(filename, cv::FileStorage::READ);
 	if (!model_file.isOpened())
-		return false;
+		throw runtime_error("Cannot open model file \"" + filename + "\".");
 
 	model_file["mean_shape"] >> mean_shape_;
 	cv::FileNode fn = model_file["test_init_shapes"];
@@ -52,15 +53,10 @@ bool FaceX::OpenModel(const string & filename)
 		*it >> r;
 		stage_regressors_.push_back(r);
 	}
-
-	is_loaded_ = true;
-	return true;
 }
 
 vector<cv::Point2d> FaceX::Alignment(cv::Mat image, cv::Rect face_rect) const
 {
-	CV_Assert(is_loaded_);
-
 	vector<vector<double>> all_results(test_init_shapes_[0].size() * 2);
 	for (int i = 0; i < test_init_shapes_.size(); ++i)
 	{
@@ -68,9 +64,9 @@ vector<cv::Point2d> FaceX::Alignment(cv::Mat image, cv::Rect face_rect) const
 			test_init_shapes_[i], face_rect);
 		for (int j = 0; j < stage_regressors_.size(); ++j)
 		{
-			vector<cv::Point2d> offset =
-				stage_regressors_[j].Apply(mean_shape_, image, init_shape);
 			Transform t = Procrustes(init_shape, mean_shape_);
+			vector<cv::Point2d> offset =
+				stage_regressors_[j].Apply(t, image, init_shape);
 			t.Apply(&offset, false);
 			init_shape = ShapeAdjustment(init_shape, offset);
 		}
@@ -108,9 +104,9 @@ vector<cv::Point2d> FaceX::Alignment(cv::Mat image,
 		t.Apply(&init_shape);
 		for (int j = 0; j < stage_regressors_.size(); ++j)
 		{
-			vector<cv::Point2d> offset =
-				stage_regressors_[j].Apply(mean_shape_, image, init_shape);
 			Transform t = Procrustes(init_shape, mean_shape_);
+			vector<cv::Point2d> offset =
+				stage_regressors_[j].Apply(t, image, init_shape);
 			t.Apply(&offset, false);
 			init_shape = ShapeAdjustment(init_shape, offset);
 		}
