@@ -2,7 +2,7 @@
 FaceX-Train is a tool to train model file for FaceX, which is an open
 source face alignment library.
 
-Copyright(C) 2014  Yang Cao
+Copyright(C) 2015  Yang Cao
 
 This program is free software : you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -43,10 +43,10 @@ public:
 	void write(cv::FileStorage &fs)const;
 
 private:
-	std::vector<std::pair<int, cv::Point2d>> pixels;
-	std::vector<FernTrain> ferns;
-	cv::Mat base;
-	const TrainingParameters &training_parameters;
+	std::vector<std::pair<int, cv::Point2d>> pixels_;
+	std::vector<FernTrain> ferns_;
+	cv::Mat base_;
+	const TrainingParameters &training_parameters_;
 
 	void CompressFerns();
 };

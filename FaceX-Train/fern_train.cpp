@@ -2,7 +2,7 @@
 FaceX-Train is a tool to train model file for FaceX, which is an open
 source face alignment library.
 
-Copyright(C) 2014  Yang Cao
+Copyright(C) 2015  Yang Cao
 
 This program is free software : you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -54,12 +54,12 @@ void FernTrain::Regress(vector<vector<cv::Point2d>> *targets,
 		cv::Mat Y_proj(Y.rows, 1, CV_64FC1, cv::alignPtr(Y_proj_data.get(), 32));
 		static_cast<cv::Mat>(Y * projection).copyTo(Y_proj);
 		double Y_proj_cov = Covariance(Y_proj.ptr<double>(0), 
-			Y_proj.ptr<double>(0), Y_proj.total());
+			Y_proj.ptr<double>(0), Y_proj.total());	// Use AVXCovariance if you want.
 		vector<double> Y_pixels_cov(pixels_val.rows);
 		for (int j = 0; j < pixels_val.rows; ++j)
 		{
 			Y_pixels_cov[j] = Covariance(Y_proj.ptr<double>(0), 
-				pixels_val.ptr<double>(j), Y_proj.total());
+				pixels_val.ptr<double>(j), Y_proj.total());	// Use AVXCovariance if you want.
 		}
 		double max_corr = -1;
 		for (int j = 0; j < pixels_val.rows; ++j)

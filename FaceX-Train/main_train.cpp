@@ -2,7 +2,7 @@
 FaceX-Train is a tool to train model file for FaceX, which is an open
 source face alignment library.
 
-Copyright(C) 2014  Yang Cao
+Copyright(C) 2015  Yang Cao
 
 This program is free software : you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -159,8 +159,8 @@ vector<vector<cv::Point2d>> CreateTestInitShapes(
 			training_data[i].landmarks, cv::Rect(0, 0, 1, 1));
 		for (int j = 0; j < kLandmarksSize; ++j)
 		{
-			all_landmarks.at<float>(i, j * 2) = landmarks[j].x;
-			all_landmarks.at<float>(i, j * 2 + 1) = landmarks[j].y;
+			all_landmarks.at<float>(i, j * 2) = static_cast<float>(landmarks[j].x);
+			all_landmarks.at<float>(i, j * 2 + 1) = static_cast<float>(landmarks[j].y);
 		}
 	}
 	cv::Mat labels, centers;

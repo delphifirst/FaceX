@@ -2,7 +2,7 @@
 	FaceX-Train is a tool to train model file for FaceX, which is an open 
 	source face alignment library.
 
-	Copyright(C) 2014  Yang Cao
+	Copyright(C) 2015  Yang Cao
 
 	This program is free software : you can redistribute it and / or modify
 	it under the terms of the GNU General Public License as published by
