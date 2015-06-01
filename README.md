@@ -29,6 +29,8 @@ image1.png FACE-LEFT FACE-RIGHT FACE-TOP FACE-BOTTOM X1 Y1 X2 Y2 ...
 
 image2.png ...
 
+Notice that FACE-LEFT, FACE-RIGHT, FACE-TOP, FACE-BOTTOM must be integers and the face region is inclusively constructed (i.e. boarders are included). X1 Y1, X2 Y2, ... can be floating numbers.
+
 Then create a config file for training, you can use FaceX-Train/sample_config.txt as a start point. After that, run command:
 
 FaceX-Train config.txt
