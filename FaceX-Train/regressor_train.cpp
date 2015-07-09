@@ -181,7 +181,7 @@ void RegressorTrain::write(cv::FileStorage &fs)const
 	for (auto it = pixels_.begin(); it != pixels_.end(); ++it)
 		fs << "{" << "first" << it->first << "second" << it->second << "}";
 	fs << "]";
-	fs << "ferns_" << "[";
+	fs << "ferns" << "[";
 	for (auto it = ferns_.begin(); it != ferns_.end(); ++it)
 		fs << *it;
 	fs << "]";
