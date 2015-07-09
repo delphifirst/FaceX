@@ -25,10 +25,7 @@ THE SOFTWARE.
 #include <iostream>
 #include <string>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/objdetect/objdetect.hpp>
+#include <opencv2/opencv.hpp>
 
 #include "face_x.h"
 
@@ -73,15 +70,15 @@ void Tracking(const FaceX & face_x)
 	cv::VideoCapture vc(0);
 	vc >> frame;
 	cv::CascadeClassifier cc(kAlt2);
-	cv::vector<cv::Point2d> landmarks(face_x.landmarks_count());
+	vector<cv::Point2d> landmarks(face_x.landmarks_count());
 
 	for (;;)
 	{
 		vc >> frame;
 		cv::cvtColor(frame, img, cv::COLOR_BGR2GRAY);
-		cv::imshow("test", img);
+		cv::imshow("Gray image", img);
 
-		cv::vector<cv::Point2d> original_landmarks = landmarks;
+		vector<cv::Point2d> original_landmarks = landmarks;
 		landmarks = face_x.Alignment(img, landmarks);
 
 		for (int i = 0; i < landmarks.size(); ++i)

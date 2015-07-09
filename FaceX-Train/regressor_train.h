@@ -25,7 +25,7 @@ along with this program.If not, see <http://www.gnu.org/licenses/>.
 #include<utility>
 #include<string>
 
-#include<opencv2/core/core.hpp>
+#include<opencv2/opencv.hpp>
 
 #include "utils_train.h"
 #include "fern_train.h"

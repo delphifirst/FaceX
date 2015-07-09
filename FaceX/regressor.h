@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include<utility>
 #include<string>
 
-#include<opencv2/core/core.hpp>
+#include<opencv2/opencv.hpp>
 
 #include "fern.h"
 #include "utils.h"
