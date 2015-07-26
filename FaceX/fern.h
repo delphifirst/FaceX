@@ -38,7 +38,6 @@ struct Fern
 
 	std::vector<double> thresholds;
 	std::vector<std::pair<int, int>> features_index;
-	std::vector<std::vector<cv::Point2d>> outputs;
 	std::vector<std::vector<std::pair<int, double>>> outputs_mini;
 };
 
