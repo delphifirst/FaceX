@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 using namespace std;
 
-void Fern::ApplyMini(cv::Mat features, std::vector<double> &coeffs)const
+void Fern::ApplyMini(cv::Mat features, cv::Mat coeffs)const
 {
 	int outputs_index = 0;
 	for (int i = 0; i < features_index.size(); ++i)
@@ -46,7 +46,7 @@ void Fern::ApplyMini(cv::Mat features, std::vector<double> &coeffs)const
 
 	const vector<pair<int, double>> &output = outputs_mini[outputs_index];
 	for (int i = 0; i < output.size(); ++i)
-		coeffs[output[i].first] += output[i].second;
+		coeffs.at<double>(output[i].first) += output[i].second;
 }
 
 void Fern::read(const cv::FileNode &fn)

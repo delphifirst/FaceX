@@ -32,7 +32,7 @@ THE SOFTWARE.
 
 struct Fern
 {
-	void ApplyMini(cv::Mat features, std::vector<double> &coeffs)const;
+	void ApplyMini(cv::Mat features, cv::Mat coeffs)const;
 
 	void read(const cv::FileNode &fn);
 

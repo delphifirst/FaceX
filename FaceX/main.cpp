@@ -47,12 +47,19 @@ void AlignImage(const FaceX & face_x)
 		return;
 	}
 	vector<cv::Rect> faces;
+	double start_time = cv::getTickCount();
 	cc.detectMultiScale(gray_image, faces);
+	cout << "Detection time: " << (cv::getTickCount() - start_time) / cv::getTickFrequency()
+		<< "s" << endl;
 
 	for (cv::Rect face : faces)
 	{
 		cv::rectangle(image, face, cv::Scalar(0, 0, 255), 2);
+		start_time = cv::getTickCount();
 		vector<cv::Point2d> landmarks = face_x.Alignment(gray_image, face);
+		cout << "Alignment time: " 
+			<< (cv::getTickCount() - start_time) / cv::getTickFrequency()
+			<< "s" << endl;
 		for (cv::Point2d landmark : landmarks)
 		{
 			cv::circle(image, landmark, 1, cv::Scalar(0, 255, 0), 2);

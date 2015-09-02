@@ -51,13 +51,12 @@ vector<cv::Point2d> Regressor::Apply(const Transform &t,
 			p[j] = 0;
 	}
 
-	vector<double> coeffs(base_.cols);
+	cv::Mat coeffs = cv::Mat::zeros(base_.cols, 1, CV_64FC1);
 	for (int i = 0; i < ferns_.size(); ++i)
 		ferns_[i].ApplyMini(pixels_val, coeffs);
 
-	cv::Mat result_mat = cv::Mat::zeros(init_shape.size() * 2, 1, CV_64FC1);
-	for (int i = 0; i < base_.cols; ++i)
-		result_mat += coeffs[i] * base_.col(i);
+	cv::Mat result_mat = base_ * coeffs;
+	
 	vector<cv::Point2d> result(init_shape.size());
 	for (int i = 0; i < result.size(); ++i)
 	{
