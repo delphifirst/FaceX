@@ -44,6 +44,7 @@ Known Issue
 
 1. The program is very slow if you run it in Visual C++ debugger. Even if you use Release Mode. Therefore, run it directly outside (remember to put the three files in the current working directory). It seems Visual C++ debugger will slow down some program greatly.
 2. On some version of Linux, If you use more than one FaceX object in the program, it will consume about 600MB more memory. I don't know the reason, but use tcmalloc to replace the memory allocator of g++ will solve this problem. Maybe there is a bug in OpenCV or g++ memory allocator.
+3. One user reported that the training code doesn't work on Mac. I'll check it when I have opportunity. The alignment code works fine however.
 
 Reference
 ====
