@@ -25,15 +25,14 @@ How To Train
 
 First collect face images with face area and landmark labels. I recommend you first download dataset from [3] to see if the works correctly. You can check FaceX-Train/train to know how to organize the training data. The name of the label file must be labels.txt, and the format of labels.txt is like this:
 
-image1.png FACE-LEFT FACE-RIGHT FACE-TOP FACE-BOTTOM X1 Y1 X2 Y2 ...
-
-image2.png ...
+> image1.png FACE-LEFT FACE-RIGHT FACE-TOP FACE-BOTTOM X1 Y1 X2 Y2 ...
+> image2.png ...
 
 Notice that FACE-LEFT, FACE-RIGHT, FACE-TOP, FACE-BOTTOM must be integers and the face region is inclusively constructed (i.e. boarders are included). X1 Y1, X2 Y2, ... can be floating numbers.
 
 Then create a config file for training, you can use FaceX-Train/sample_config.txt as a start point. After that, run command:
 
-FaceX-Train config.txt
+> FaceX-Train config.txt
 
 It will take several minutes to several hours, depending on the training-set size and the speed of your computer.
 
